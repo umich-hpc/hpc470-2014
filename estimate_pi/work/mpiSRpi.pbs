@@ -1,0 +1,20 @@
+#!/bin/sh 
+
+#PBS -V 
+#PBS -S /bin/sh 
+#PBS -N mpiSRpi
+#PBS -A support_flux
+#PBS -l qos=flux
+#PBS -q flux
+#PBS -M cja@umich.edu 
+#PBS -m abe 
+#PBS -j oe 
+#PBS -l procs=5
+#PBS -l walltime=4:00:00
+
+if [ -n "$PBS_O_WORKDIR" ]; then cd $PBS_O_WORKDIR; fi
+pwd
+ 
+for p in `seq 1 11`; do
+	time mpirun mpiSRpi $(dc -e "10 $p^p")
+done
